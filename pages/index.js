@@ -104,11 +104,11 @@ export default function Home() {
               <DBox
                 key={idx}
                 onChange={(a, b) => {
-                  const newImages = [...images];
-                  const temp = newImages[a];
-                  newImages[a] = newImages[b];
-                  newImages[b] = temp;
-                  setImages(newImages);
+                  let changedImages = [...images];
+                  let temp = changedImages[a];
+                  changedImages[a] = changedImages[b];
+                  changedImages[b] = temp;
+                  setImages(changedImages);
                 }}
               >
                 <Box
