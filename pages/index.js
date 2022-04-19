@@ -29,7 +29,17 @@ export default function Home() {
     const newImages = images.filter((img, i) => i !== idx);
 
     setImages(newImages);
-    setDisplay(null);
+    if (display === images[idx]) {
+      setDisplay(null);
+    }
+  };
+
+  const changeposition = (idx, newPosition) => {
+    const temp = images[idx];
+    const newImages = [...images];
+    newImages[idx] = newImages[newPosition];
+    newImages[newPosition] = temp;
+    setImages(newImages);
   };
 
   const newpromise = (file) => {
@@ -59,10 +69,9 @@ export default function Home() {
       <VStack>
         <Box w="50%" p="4">
           <InputGroup size="lg">
-            <InputLeftElement
-              pointerEvents="none"
-              children={<FiUploadCloud color="gray.300" />}
-            />
+            <InputLeftElement pointerEvents="none">
+              <FiUploadCloud color="gray.300" />
+            </InputLeftElement>
             <Input pr="4.5rem" rounded={"full"} />
             <InputRightElement w="120px">
               <Button
@@ -98,23 +107,19 @@ export default function Home() {
           Upload
         </Button>
 
-        <HStack spacing={"40px"}>
+        <HStack spacing={"40px"} maxW={"1200px"} overflow="auto">
           {images.map((image, idx) => (
-            <Dustbin>
+            <Dustbin key={idx}>
               <DBox
                 key={idx}
                 onChange={(a, b) => {
-                  let changedImages = [...images];
-                  let temp = changedImages[a];
-                  changedImages[a] = changedImages[b];
-                  changedImages[b] = temp;
-                  setImages(changedImages);
+                  changeposition(a, b);
                 }}
               >
                 <Box
                   key={idx}
                   border={"1px"}
-                  w="150px"
+                  minW="150px"
                   h="150px"
                   position={"relative"}
                 >
